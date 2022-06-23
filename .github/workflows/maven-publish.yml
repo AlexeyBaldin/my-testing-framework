@@ -33,7 +33,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Build Maven project
-      run: mvn -B package --file pom.xml mkdir staging && cp target/*.jar staging
+      run: mvn -B package --file pom.xml
+           mkdir staging && cp target/*.jar staging
 
     - name: Persist workflow data as artifacts
       uses: actions/upload-artifact@v2
