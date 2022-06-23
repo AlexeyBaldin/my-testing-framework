@@ -27,10 +27,10 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn -B deploy --file pom.xml
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    - name: Build Maven project
+      run: |
+          mvn -B package --file pom.xml -Dmaven.test.skip
+          mkdir staging && cp target/*.jar staging
 
     - name: Persist workflow data as artifacts
       uses: actions/upload-artifact@v2
