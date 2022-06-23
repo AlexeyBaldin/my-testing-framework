@@ -28,6 +28,12 @@ jobs:
         distribution: 'temurin'
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn -Djar.finalName=my-testing-framework -B deploy
+      run: mvn -B deploy --file pom.xml
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
+    - name: Persist workflow data as artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-testing-framework
+        path: staging
