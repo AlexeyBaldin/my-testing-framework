@@ -24,6 +24,7 @@
             <uniqueVersion>false</uniqueVersion>
             <id>mtf1</id>
             <name>My Testing Framework Repository</name>
+            <url>https://maven.pkg.github.com/AlexeyBaldin/my-testing-framework</url>
             <layout>default</layout>
         </repository>
     </distributionManagement>
