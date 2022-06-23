@@ -21,10 +21,9 @@
 
     <distributionManagement>
         <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>mtf1</id>
-            <name>My Testing Framework Repository</name>
-            <layout>default</layout>
+            <id>github</id>
+            <name>GutHub Packages</name>
+            <url>https://maven.pkg.github.com/AlexeyBaldin/my-testing-framework</url>
         </repository>
     </distributionManagement>
 
