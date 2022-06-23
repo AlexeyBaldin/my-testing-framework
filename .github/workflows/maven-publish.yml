@@ -27,6 +27,13 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
 
+    - name: Increment build number
+      run: |
+        mvn build-helper:parse-version versions:set "-DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}" versions:commit
+        git add ./pom.xml
+        git -c "user.name=Github Actions" -c "user.email=${{ secrets.EMAIL }}" commit -m "Increment build number"
+        git push
+
     - name: Publish to GitHub Packages Apache Maven
       run: mvn -B deploy
       env:
