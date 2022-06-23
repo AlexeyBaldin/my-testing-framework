@@ -28,6 +28,6 @@ jobs:
         distribution: 'temurin'
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn -B deploy
+      run: mvn -Djar.finalName=my-testing-framework -B deploy
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
