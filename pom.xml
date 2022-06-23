@@ -9,7 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <build>
-        <finalName>my-testing-framework</finalName>
+<!--        <finalName>my-testing-framework</finalName>-->
+        <finalName>testtesttest</finalName>
 
         <resources>
             <resource>
