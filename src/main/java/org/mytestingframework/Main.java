@@ -20,4 +20,12 @@ public class Main {
         System.out.println(ANSI_BLUE + "Test success" + ANSI_RESET);
         return true;
     }
+
+    @MyTest
+    public static Boolean testError() {
+        System.out.println(ANSI_BLUE + "Test error" + ANSI_RESET);
+        return false;
+    }
+
+
 }

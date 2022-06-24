@@ -156,7 +156,9 @@ class MyTester {
         Collections.addAll(methods, testedClass.getMethods());
 
         methods.forEach(method -> {
-            if (method.isAnnotationPresent(MyTest.class) && method.getReturnType() == boolean.class && Modifier.isStatic(method.getModifiers())) {
+            if (method.isAnnotationPresent(MyTest.class) &&
+                    (method.getReturnType() == boolean.class || method.getReturnType() == Boolean.class) &&
+                    Modifier.isStatic(method.getModifiers())) {
                 tests.add(method);
             }
         });
