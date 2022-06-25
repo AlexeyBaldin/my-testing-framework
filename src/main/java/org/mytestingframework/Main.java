@@ -3,6 +3,8 @@ package org.mytestingframework;
 import org.mytestingframework.MyTestingFramework;
 import org.mytestingframework.annotations.MyTest;
 import org.mytestingframework.annotations.MyTesterTarget;
+import org.mytestingframework.constant.About;
+
 import static org.mytestingframework.constant.Color.*;
 
 @MyTesterTarget
