@@ -1,6 +1,7 @@
 package org.mytestingframework;
 
 import org.mytestingframework.constant.About;
+import org.mytestingframework.constant.Config;
 
 import java.util.*;
 
@@ -11,40 +12,45 @@ class MyTestPrinter {
     private MyTestPrinter() {}
 
     static void hello() {
-        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("╔╗──╔╗╔╗╔╗────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║║──║║║║║║────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║╚╗╔╝║║╚╝║────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║╔╗╔╗║╚═╗║────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║║╚╝║║─╔╝║────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("╚╝──╚╝─╚═╝────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("╔════╗╔═══╗╔══╗╔════╗╔══╗╔╗─╔╗╔═══╗───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("╚═╗╔═╝║╔══╝║╔═╝╚═╗╔═╝╚╗╔╝║╚═╝║║╔══╝───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("──║║──║╚══╗║╚═╗──║║───║║─║╔╗─║║║╔═╗───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("──║║──║╔══╝╚═╗║──║║───║║─║║╚╗║║║╚╗║───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("──║║──║╚══╗╔═╝║──║║──╔╝╚╗║║─║║║╚═╝║───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("──╚╝──╚═══╝╚══╝──╚╝──╚══╝╚╝─╚╝╚═══╝───────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("╔══╗╔═══╗╔══╗╔╗──╔╗╔═══╗╔╗╔╗╔╗╔══╗╔═══╗╔╗╔══╗─────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║╔═╝║╔═╗║║╔╗║║║──║║║╔══╝║║║║║║║╔╗║║╔═╗║║║║╔═╝─────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║╚═╗║╚═╝║║╚╝║║╚╗╔╝║║╚══╗║║║║║║║║║║║╚═╝║║╚╝║───────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║╔═╝║╔╗╔╝║╔╗║║╔╗╔╗║║╔══╝║║║║║║║║║║║╔╗╔╝║╔╗║───────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("║║──║║║║─║║║║║║╚╝║║║╚══╗║╚╝╚╝║║╚╝║║║║║─║║║╚═╗────────────────────────────────────────────────────────────────────────────────────────────────" + About.VERSION + "───");
-        System.out.println("╚╝──╚╝╚╝─╚╝╚╝╚╝──╚╝╚═══╝╚═╝╚═╝╚══╝╚╝╚╝─╚╝╚══╝────────────────────────────────────────────────────────────────────────────────────────" + About.AUTHOR_NAME + About.AUTHOR_SNAME + "───");
-        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        StringBuilder stringBuilder = new StringBuilder();
+        System.out.println(padAndFillString(""));
+        System.out.println(padAndFillString("   ╔╗  ╔╗╔╗╔╗"));
+        System.out.println(padAndFillString("   ║║  ║║║║║║"));
+        System.out.println(padAndFillString("   ║╚╗╔╝║║╚╝║"));
+        System.out.println(padAndFillString("   ║╔╗╔╗║╚═╗║"));
+        String appendString = String.format("%" + ((25 - About.VERSION.length())/2 + About.VERSION.length() + 1) + "s", "|" + About.VERSION + "|");
+        stringBuilder.append("   ║║╚╝║║ ╔╝║").append(appendString);
+        System.out.println(padAndFillString(stringBuilder.toString()));
+        System.out.println(padAndFillString("   ╚╝  ╚╝ ╚═╝       " + About.AUTHOR_NAME + About.AUTHOR_SNAME));
+        System.out.println(padAndFillString("   ╔════╗╔═══╗╔══╗╔════╗╔══╗╔╗─╔╗╔═══╗"));
+        System.out.println(padAndFillString("   ╚═╗╔═╝║╔══╝║╔═╝╚═╗╔═╝╚╗╔╝║╚═╝║║╔══╝"));
+        System.out.println(padAndFillString("     ║║  ║╚══╗║╚═╗  ║║   ║║ ║╔╗ ║║║╔═╗"));
+        System.out.println(padAndFillString("     ║║  ║╔══╝╚═╗║  ║║   ║║ ║║╚╗║║║╚╗║"));
+        System.out.println(padAndFillString("     ║║  ║╚══╗╔═╝║  ║║  ╔╝╚╗║║ ║║║╚═╝║"));
+        System.out.println(padAndFillString("     ╚╝  ╚═══╝╚══╝  ╚╝  ╚══╝╚╝ ╚╝╚═══╝"));
+        System.out.println(padAndFillString("   ╔══╗╔═══╗╔══╗╔╗  ╔╗╔═══╗╔╗╔╗╔╗╔══╗╔═══╗╔╗╔══╗"));
+        System.out.println(padAndFillString("   ║╔═╝║╔═╗║║╔╗║║║  ║║║╔══╝║║║║║║║╔╗║║╔═╗║║║║╔═╝"));
+        System.out.println(padAndFillString("   ║╚═╗║╚═╝║║╚╝║║╚╗╔╝║║╚══╗║║║║║║║║║║║╚═╝║║╚╝║"));
+        System.out.println(padAndFillString("   ║╔═╝║╔╗╔╝║╔╗║║╔╗╔╗║║╔══╝║║║║║║║║║║║╔╗╔╝║╔╗║"));
+        System.out.println(padAndFillString("   ║║  ║║║║ ║║║║║║╚╝║║║╚══╗║╚╝╚╝║║╚╝║║║║║ ║║║╚═╗"));
+        System.out.println(padAndFillString("   ╚╝  ╚╝╚╝ ╚╝╚╝╚╝  ╚╝╚═══╝╚═╝╚═╝╚══╝╚╝╚╝ ╚╝╚══╝"));
+        System.out.println(padAndFillString(""));
+        System.out.println(padAndFillString("   Start testing."));
+        System.out.println(padAndFillString("   Start internal output..."));
+    }
 
-
-        System.out.println("───Start testing.─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("───Start internal output...───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+    private static String padAndFillString(String string) {
+        return String.format("%-" + Config.PRINTER_STRING_SIZE + "s", string).replace(" ", Config.PRINTER_FILLER);
     }
 
     static void goodbye() {
-        System.out.println("───Finish testing.────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-    }
+        System.out.println(padAndFillString("   Finish testing."));
+        System.out.println(padAndFillString(""));
+   }
 
     static void printTestResults(HashSet<MyTestInformation> testResults) {
-        System.out.println("───End internal output.───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-        System.out.println("───Results:───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        System.out.println(padAndFillString("   End internal output."));
+        System.out.println(padAndFillString("   Results:"));
         System.out.println(formTestResultsString(testResults));
     }
 
@@ -59,9 +65,9 @@ class MyTestPrinter {
 
         stringBuilder.append('\n');
         testResults.forEach(testResult -> {
-            stringBuilder.append("───[" + ANSI_CYAN).append(String.format("%-" + maxClassNameLength+ "s", testResult.getTestingClass().getName()))
+            stringBuilder.append("   [" + ANSI_CYAN).append(String.format("%-" + maxClassNameLength + "s", testResult.getTestingClass().getName()))
                     .append(ANSI_RESET).append(" : ")
-                    .append(ANSI_BLUE).append(String.format("%-" + maxTestNameLength+ "s", testResult.getTestingMethod().getName()))
+                    .append(ANSI_BLUE).append(String.format("%-" + maxTestNameLength + "s", testResult.getTestingMethod().getName()))
                     .append(ANSI_RESET).append("]");
 
             if (testResult.getResult()) {
