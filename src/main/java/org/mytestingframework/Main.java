@@ -13,6 +13,7 @@ public class Main {
         try {
             MyTestingFramework.run("");
             System.out.println("test");
+            System.out.println("test");
         } catch (Exception e) {
             e.printStackTrace();
         }
