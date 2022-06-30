@@ -178,6 +178,7 @@ class MyTester {
         long time = System.currentTimeMillis();
         boolean success = false;
         try {
+            MyTestPrinter.printTestName(testedClass, testedMethod);
             success = (boolean) testedMethod.invoke(testedClass);
         } catch (Exception e) {
             e.printStackTrace();

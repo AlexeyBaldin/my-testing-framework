@@ -19,13 +19,13 @@ public class Main {
 
     @MyTest
     public static boolean testSuccess() {
-        System.out.println(ANSI_BLUE + "Test success" + ANSI_RESET);
+        System.out.println("Test success");
         return true;
     }
 
     @MyTest
     public static Boolean testError() {
-        System.out.println(ANSI_BLUE + "Test error" + ANSI_RESET);
+        System.out.println("Test error");
         return false;
     }
 
