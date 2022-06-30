@@ -3,6 +3,7 @@ package org.mytestingframework;
 import org.mytestingframework.constant.About;
 import org.mytestingframework.constant.Config;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 import static org.mytestingframework.constant.Color.*;
@@ -52,6 +53,10 @@ class MyTestPrinter {
         System.out.println(padAndFillString("   End internal output."));
         System.out.println(padAndFillString("   Results:"));
         System.out.println(formTestResultsString(testResults));
+    }
+
+    static void printTestName(Class<?> testedClass, Method testedMethod) {
+        System.out.println("    " + ANSI_CYAN + testedClass.getName() + ANSI_RESET + " : " + ANSI_BLUE + testedMethod.getName() + ANSI_RESET);
     }
 
     private static StringBuilder formTestResultsString(HashSet<MyTestInformation> testResults) {
