@@ -15,6 +15,8 @@ public class Main {
             System.out.println("test");
             System.out.println("test");
             System.out.println("test");
+            System.out.println("test");
+            System.out.println("test");
         } catch (Exception e) {
             e.printStackTrace();
         }
