@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             MyTestingFramework.run("");
+            System.out.println("test");
         } catch (Exception e) {
             e.printStackTrace();
         }
