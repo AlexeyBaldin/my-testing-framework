@@ -6,7 +6,7 @@
 
     <groupId>com.alexeybaldin</groupId>
     <artifactId>my-testing-framework</artifactId>
-    <version>TEST-1.0.-1</version>
+    <version>0.0.1</version>
 
     <build>
         <finalName>my-testing-framework</finalName>
