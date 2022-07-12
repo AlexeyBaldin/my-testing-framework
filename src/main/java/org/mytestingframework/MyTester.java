@@ -156,7 +156,7 @@ class MyTester {
 
         methods.forEach(method -> {
             if (method.isAnnotationPresent(MyTest.class) &&
-                    (method.getReturnType() == boolean.class || method.getReturnType() == Boolean.class) &&
+                    method.getReturnType() == void.class &&
                     Modifier.isStatic(method.getModifiers())) {
                 tests.add(method);
             }
@@ -175,11 +175,10 @@ class MyTester {
         }
 
         long time = System.currentTimeMillis();
-        boolean success = false;
         String error = null;
         try {
             MyTestPrinter.printTestName(testedClass, testedMethod);
-            success = (boolean) testedMethod.invoke(testedClass);
+            testedMethod.invoke(testedClass);
         } catch (InvocationTargetException e) {
             error = e.getCause().getMessage();
         } catch (IllegalAccessException e) {
@@ -194,6 +193,8 @@ class MyTester {
                 e.printStackTrace();
             }
         }
+
+        boolean success = Objects.isNull(error);
         testResults.add(new MyTestInformation(testedClass, testedMethod, success, (double)time / 1000, error));
     }
 

@@ -22,17 +22,15 @@ public class Main {
     }
 
     @MyTest
-    public static boolean testSuccess() {
+    public static void testSuccess() {
         System.out.println("Test success");
         MyAssert.assertTrue(true);
-        return true;
     }
 
     @MyTest
-    public static Boolean testError() {
+    public static void testError() {
         System.out.println("Test error");
         MyAssert.assertFalse(true);
-        return false;
     }
 
 
