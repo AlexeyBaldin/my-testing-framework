@@ -35,6 +35,7 @@ class MyTestPrinter {
         System.out.println(padAndFillString("   ║╔═╝║╔╗╔╝║╔╗║║╔╗╔╗║║╔══╝║║║║║║║║║║║╔╗╔╝║╔╗║"));
         System.out.println(padAndFillString("   ║║  ║║║║ ║║║║║║╚╝║║║╚══╗║╚╝╚╝║║╚╝║║║║║ ║║║╚═╗"));
         System.out.println(padAndFillString("   ╚╝  ╚╝╚╝ ╚╝╚╝╚╝  ╚╝╚═══╝╚═╝╚═╝╚══╝╚╝╚╝ ╚╝╚══╝"));
+
         System.out.println(padAndFillString(""));
         System.out.println(padAndFillString("   Start testing."));
         System.out.println(padAndFillString("   Start internal output..."));
@@ -79,6 +80,10 @@ class MyTestPrinter {
                 stringBuilder.append(ANSI_GREEN + "      Test Success  :)   " + ANSI_YELLOW).append(String.format("%10s", testResult.getTimeInSeconds())).append(" sec.").append(ANSI_RESET).append('\n');
             } else {
                 stringBuilder.append(ANSI_RED + "        Test Error  :(   " + ANSI_YELLOW).append(String.format("%10s", testResult.getTimeInSeconds())).append(" sec.").append(ANSI_RESET).append('\n');
+            }
+
+            if(testResult.getError() != null) {
+                stringBuilder.append("      " + ANSI_RED).append(testResult.getError()).append(ANSI_RESET).append('\n');
             }
         });
 

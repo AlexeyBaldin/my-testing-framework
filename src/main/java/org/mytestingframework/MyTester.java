@@ -1,15 +1,14 @@
 package org.mytestingframework;
 
 import org.mytestingframework.annotations.*;
+import org.mytestingframework.constant.Color;
+import org.mytestingframework.throwable.MyAssertError;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 class MyTester {
@@ -177,10 +176,13 @@ class MyTester {
 
         long time = System.currentTimeMillis();
         boolean success = false;
+        String error = null;
         try {
             MyTestPrinter.printTestName(testedClass, testedMethod);
             success = (boolean) testedMethod.invoke(testedClass);
-        } catch (Exception e) {
+        } catch (InvocationTargetException e) {
+            error = e.getCause().getMessage();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         time = System.currentTimeMillis() - time;
@@ -192,7 +194,7 @@ class MyTester {
                 e.printStackTrace();
             }
         }
-        testResults.add(new MyTestInformation(testedClass, testedMethod, success, (double)time / 1000));
+        testResults.add(new MyTestInformation(testedClass, testedMethod, success, (double)time / 1000, error));
     }
 
 }

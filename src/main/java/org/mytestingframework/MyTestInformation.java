@@ -8,14 +8,14 @@ class MyTestInformation {
     private Method testingMethod;
     private boolean result;
     private double timeInSeconds;
-    private HashSet<String> errors;
+    private String error;
 
-    public MyTestInformation(Class<?> testingClass, Method testingMethod, boolean result, double timeInSeconds) {
+    public MyTestInformation(Class<?> testingClass, Method testingMethod, boolean result, double timeInSeconds, String error) {
         this.testingClass = testingClass;
         this.testingMethod = testingMethod;
         this.result = result;
         this.timeInSeconds = timeInSeconds;
-        this.errors = new HashSet<>();
+        this.error = error;
     }
 
     public Class<?> getTestingClass() {
@@ -50,11 +50,11 @@ class MyTestInformation {
         this.timeInSeconds = timeInSeconds;
     }
 
-    public HashSet<String> getErrors() {
-        return errors;
+    public String getError() {
+        return error;
     }
 
-    public void setErrors(HashSet<String> errors) {
-        this.errors = errors;
+    public void setError(String error) {
+        this.error = error;
     }
 }

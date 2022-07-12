@@ -3,7 +3,9 @@ package org.mytestingframework;
 import org.mytestingframework.MyTestingFramework;
 import org.mytestingframework.annotations.MyTest;
 import org.mytestingframework.annotations.MyTesterTarget;
+import org.mytestingframework.asserts.MyAssert;
 import org.mytestingframework.constant.About;
+import org.mytestingframework.throwable.MyAssertError;
 
 import static org.mytestingframework.constant.Color.*;
 
@@ -12,12 +14,9 @@ public class Main {
     public static void main(String[] args) {
         try {
             MyTestingFramework.run("");
-            System.out.println("test");
-            System.out.println("test");
-            System.out.println("test");
-            System.out.println("test");
-            System.out.println("test");
-        } catch (Exception e) {
+
+
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -25,12 +24,14 @@ public class Main {
     @MyTest
     public static boolean testSuccess() {
         System.out.println("Test success");
+        MyAssert.assertTrue(true);
         return true;
     }
 
     @MyTest
     public static Boolean testError() {
         System.out.println("Test error");
+        MyAssert.assertFalse(true);
         return false;
     }
 
