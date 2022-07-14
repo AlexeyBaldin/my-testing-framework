@@ -59,10 +59,13 @@ class MyTester {
 
     static String getErrorsString() {
         String errorsString = errors.toString();
-        if (errorsString.charAt(errorsString.length() - 1) == '\n') {
+        if(errorsString.length() == 0) {
+            return null;
+        } else if (errorsString.charAt(errorsString.length() - 1) == '\n') {
             return errorsString.substring(0, errorsString.length() - 1) + ANSI_RESET;
+        } else {
+            return errorsString + ANSI_RESET;
         }
-        return errorsString + ANSI_RESET;
     }
 
     static HashSet<MyTestInformation> getTestResults() {

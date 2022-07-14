@@ -21,37 +21,41 @@ public class Main {
     }
 
     @MyTest
-    public static int testSuccess() {
-        System.out.println("Test success");
+    public static void test() {
         MyAssert.assertTrue(true);
-        return 1;
     }
 
-    @MyTest
-    public void testError() {
-        System.out.println("Test error");
-        MyAssert.assertFalse(true);
-    }
-
-    @MyBeforeTest
-    public static void a() {}
-
-    @MyBeforeTest
-    public static void b() {}
-
-    @MyAfterTest
-    public static void c() {}
-
-    @MyAfterTest
-    public static void d() {}
-
-    @MyBeforeAllTests
-    public static void e() {}
-    @MyBeforeAllTests
-    public static void f() {}
-    @MyAfterAllTests
-    public static void g() {}
-    @MyAfterAllTests
-    public static void h() {}
+//    @MyTest
+//    public static int testSuccess() {
+//        System.out.println("Test success");
+//        MyAssert.assertTrue(true);
+//        return 1;
+//    }
+//    @MyTest
+//    public void testError() {
+//        System.out.println("Test error");
+//        MyAssert.assertFalse(true);
+//    }
+//
+//    @MyBeforeTest
+//    public static void a() {}
+//
+//    @MyBeforeTest
+//    public static void b() {}
+//
+//    @MyAfterTest
+//    public static void c() {}
+//
+//    @MyAfterTest
+//    public static void d() {}
+//
+//    @MyBeforeAllTests
+//    public static void e() {}
+//    @MyBeforeAllTests
+//    public static void f() {}
+//    @MyAfterAllTests
+//    public static void g() {}
+//    @MyAfterAllTests
+//    public static void h() {}
 
 }
