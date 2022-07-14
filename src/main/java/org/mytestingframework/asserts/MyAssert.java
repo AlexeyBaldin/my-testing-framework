@@ -39,6 +39,14 @@ public final class MyAssert {
         }
     }
 
+    public static void assertFail() {
+        fail("Assert fail");
+    }
+
+    public static void assertFail(String message) {
+        fail(message);
+    }
+
     public static void assertTrue(boolean condition) {
         if(!condition) {
             failEquals(true, condition);

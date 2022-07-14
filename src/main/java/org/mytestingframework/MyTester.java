@@ -1,25 +1,26 @@
 package org.mytestingframework;
 
 import org.mytestingframework.annotations.*;
-import org.mytestingframework.constant.Color;
-import org.mytestingframework.throwable.MyAssertError;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.mytestingframework.constant.Color.*;
+import static org.mytestingframework.constant.Color.ANSI_RESET;
 
 class MyTester {
 
-    private MyTester() {}
+    private MyTester() {
+    }
 
     private static Set<Class<?>> classes;
 
     private static HashSet<MyTestInformation> testResults;
 
-    private static StringBuilder errorClasses;
+    private static StringBuilder errors;
 
     static void run(String... testDirectories) {
         classes.forEach(MyTester::testClass);
@@ -28,15 +29,22 @@ class MyTester {
     static void setup(String... testDirectories) {
         classes = new HashSet<>();
         testResults = new HashSet<>();
-        errorClasses = new StringBuilder();
+        errors = new StringBuilder();
 
+        if (testDirectories.length < 1) {
+            errors.append("        No directories to tests. Please choose one or few with test classes.");
+        } else {
+            for (String directory : testDirectories) {
+                Reflections reflections = new Reflections(directory);
+                classes.addAll(reflections.getTypesAnnotatedWith(MyTesterTarget.class));
+            }
 
-        for (String directory : testDirectories) {
-            Reflections reflections = new Reflections(directory);
-            classes.addAll(reflections.getTypesAnnotatedWith(MyTesterTarget.class));
+            if (classes.size() < 1) {
+                errors.append("        No classes to tests. Please check your test directories.");
+            } else {
+                errorCheckingInClasses();
+            }
         }
-
-        checkBeforeAndAfterAnnotationsAndFindDefectiveClasses();
     }
 
     static int getClassesCount() {
@@ -49,42 +57,89 @@ class MyTester {
         return names;
     }
 
-    static String getErrorClassesString() {
-        return errorClasses.toString();
+    static String getErrorsString() {
+        String errorsString = errors.toString();
+        if (errorsString.charAt(errorsString.length() - 1) == '\n') {
+            return errorsString.substring(0, errorsString.length() - 1) + ANSI_RESET;
+        }
+        return errorsString + ANSI_RESET;
     }
 
     static HashSet<MyTestInformation> getTestResults() {
         return testResults;
     }
 
-    private static void checkBeforeAndAfterAnnotationsAndFindDefectiveClasses() {
+    private static void errorCheckingInClasses() {
 
         classes.forEach(testClass -> {
             Set<Method> methods = new HashSet<>();
             Collections.addAll(methods, testClass.getMethods());
-            AtomicInteger beforeTestCount = new AtomicInteger();
-            AtomicInteger afterTestCount = new AtomicInteger();
-            AtomicInteger beforeAllTestsCount = new AtomicInteger();
-            AtomicInteger afterAllTestsCount = new AtomicInteger();
-            methods.forEach(method -> {
+            int beforeTestCount = 0;
+            ArrayList<String> beforeTestMethods = new ArrayList<>();
+            int afterTestCount = 0;
+            ArrayList<String> afterTestMethods = new ArrayList<>();
+            int beforeAllTestsCount = 0;
+            ArrayList<String> beforeAllTestsMethods = new ArrayList<>();
+            int afterAllTestsCount = 0;
+            ArrayList<String> afterAllTestsMethods = new ArrayList<>();
+            int testsCount = 0;
+            for (Method method : methods) {
                 if (method.isAnnotationPresent(MyBeforeTest.class)) {
-                    beforeTestCount.getAndIncrement();
+                    beforeTestCount++;
+                    beforeTestMethods.add(method.getName());
                 }
                 if (method.isAnnotationPresent(MyAfterTest.class)) {
-                    afterTestCount.getAndIncrement();
+                    afterTestCount++;
+                    afterTestMethods.add(method.getName());
                 }
                 if (method.isAnnotationPresent(MyBeforeAllTests.class)) {
-                    beforeAllTestsCount.getAndIncrement();
+                    beforeAllTestsCount++;
+                    beforeAllTestsMethods.add(method.getName());
                 }
                 if (method.isAnnotationPresent(MyAfterAllTests.class)) {
-                    afterAllTestsCount.getAndIncrement();
+                    afterAllTestsCount++;
+                    afterAllTestsMethods.add(method.getName());
                 }
-            });
-            if (beforeTestCount.get() > 1 || afterTestCount.get() > 1 ||
-                    beforeAllTestsCount.get() > 1 || afterAllTestsCount.get() > 1) {
-                errorClasses.append(testClass.getName()).append(" - multiple before/after annotations. ");
+                if (method.isAnnotationPresent(MyTest.class)) {
+                    testsCount++;
+                    if (method.getReturnType() != void.class) {
+                        addModifierError(testClass, method, "not void return type.");
+                    }
+                    if (!Modifier.isStatic(method.getModifiers())) {
+                        addModifierError(testClass, method, "missing static modifier.");
+                    }
+                }
+            }
+            if(testsCount == 0) {
+                errors.append("        " + ANSI_CYAN).append(testClass.getName()).append(ANSI_RESET + " - no tests in tested class.").append('\n');
+            }
+            if (beforeTestCount > 1) {
+                addBeforeAfterError(beforeTestCount, testClass, beforeTestMethods, "multiple before test annotations.");
+            }
+            if(afterTestCount > 1) {
+                addBeforeAfterError(afterTestCount, testClass, afterTestMethods,"multiple after test annotations.");
+            }
+            if(beforeAllTestsCount > 1) {
+                addBeforeAfterError(beforeAllTestsCount, testClass, beforeAllTestsMethods, "multiple before all tests annotations.");
+            }
+            if(afterAllTestsCount > 1) {
+                addBeforeAfterError(afterAllTestsCount, testClass, afterAllTestsMethods, "multiple after all tests annotations.");
             }
         });
+    }
+
+    private static void addBeforeAfterError(int counter, Class<?> testClass, ArrayList<String> methodNames, String message) {
+        errors.append("        " + ANSI_CYAN).append(testClass.getName()).append(ANSI_RESET + " - ")
+                .append(message).append('\n').append(ANSI_BLUE);
+        for (int i = 0; i < counter; ++i) {
+            errors.append("            ").append(methodNames.get(i));
+            errors.append('\n');
+        }
+    }
+
+    private static void addModifierError(Class<?> testClass, Method testMethod, String message) {
+        errors.append("        ").append(ANSI_CYAN).append(testClass.getName()).append(ANSI_RESET).append(" : ")
+                .append(ANSI_BLUE).append(testMethod.getName()).append(ANSI_RESET + " - ").append(message).append('\n');
     }
 
     private static void testClass(Class<?> testedClass) {
@@ -94,7 +149,7 @@ class MyTester {
         Method beforeTestMethod = findBeforeTestMethod(testedClass);
         Method afterTestMethod = findAfterTestMethod(testedClass);
 
-        if(beforeAllTestsMethod != null) {
+        if (beforeAllTestsMethod != null) {
             try {
                 beforeAllTestsMethod.invoke(testedClass);
             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -104,7 +159,7 @@ class MyTester {
 
         tests.forEach(method -> testMethod(testedClass, method, beforeTestMethod, afterTestMethod));
 
-        if(afterAllTestsMethod != null) {
+        if (afterAllTestsMethod != null) {
             try {
                 afterAllTestsMethod.invoke(testedClass);
             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -155,9 +210,7 @@ class MyTester {
         Collections.addAll(methods, testedClass.getMethods());
 
         methods.forEach(method -> {
-            if (method.isAnnotationPresent(MyTest.class) &&
-                    method.getReturnType() == void.class &&
-                    Modifier.isStatic(method.getModifiers())) {
+            if (method.isAnnotationPresent(MyTest.class)) {
                 tests.add(method);
             }
         });
@@ -195,7 +248,7 @@ class MyTester {
         }
 
         boolean success = Objects.isNull(error);
-        testResults.add(new MyTestInformation(testedClass, testedMethod, success, (double)time / 1000, error));
+        testResults.add(new MyTestInformation(testedClass, testedMethod, success, (double) time / 1000, error));
     }
 
 }

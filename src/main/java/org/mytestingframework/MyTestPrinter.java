@@ -56,8 +56,8 @@ class MyTestPrinter {
         System.out.println(formTestResultsString(testResults));
     }
 
-    static void printTestName(Class<?> testedClass, Method testedMethod) {
-        System.out.println("    " + ANSI_CYAN + testedClass.getName() + ANSI_RESET + " : " + ANSI_BLUE + testedMethod.getName() + ANSI_RESET);
+    static void printTestName(Class<?> testClass, Method testedMethod) {
+        System.out.println("    " + ANSI_CYAN + testClass.getName() + ANSI_RESET + " : " + ANSI_BLUE + testedMethod.getName() + ANSI_RESET);
     }
 
     private static StringBuilder formTestResultsString(HashSet<MyTestInformation> testResults) {

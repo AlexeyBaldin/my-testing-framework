@@ -1,8 +1,7 @@
 package org.mytestingframework;
 
 import org.mytestingframework.MyTestingFramework;
-import org.mytestingframework.annotations.MyTest;
-import org.mytestingframework.annotations.MyTesterTarget;
+import org.mytestingframework.annotations.*;
 import org.mytestingframework.asserts.MyAssert;
 import org.mytestingframework.constant.About;
 import org.mytestingframework.throwable.MyAssertError;
@@ -22,16 +21,37 @@ public class Main {
     }
 
     @MyTest
-    public static void testSuccess() {
+    public static int testSuccess() {
         System.out.println("Test success");
         MyAssert.assertTrue(true);
+        return 1;
     }
 
     @MyTest
-    public static void testError() {
+    public void testError() {
         System.out.println("Test error");
         MyAssert.assertFalse(true);
     }
 
+    @MyBeforeTest
+    public static void a() {}
+
+    @MyBeforeTest
+    public static void b() {}
+
+    @MyAfterTest
+    public static void c() {}
+
+    @MyAfterTest
+    public static void d() {}
+
+    @MyBeforeAllTests
+    public static void e() {}
+    @MyBeforeAllTests
+    public static void f() {}
+    @MyAfterAllTests
+    public static void g() {}
+    @MyAfterAllTests
+    public static void h() {}
 
 }
