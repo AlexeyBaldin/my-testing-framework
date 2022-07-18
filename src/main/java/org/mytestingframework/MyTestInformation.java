@@ -3,6 +3,9 @@ package org.mytestingframework;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 
+/**
+ * DTO class for storage information about tests.
+ */
 class MyTestInformation {
     private Class<?> testingClass;
     private Method testingMethod;

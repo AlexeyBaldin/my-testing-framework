@@ -3,6 +3,9 @@ package org.mytestingframework.constant;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Class with config constants for application.
+ */
 public final class Config {
     private Config() {}
 

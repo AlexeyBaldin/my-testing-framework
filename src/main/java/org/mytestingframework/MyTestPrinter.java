@@ -8,6 +8,9 @@ import java.util.*;
 
 import static org.mytestingframework.constant.Color.*;
 
+/**
+ * Class that is responsible for console output.
+ */
 class MyTestPrinter {
 
     private MyTestPrinter() {}

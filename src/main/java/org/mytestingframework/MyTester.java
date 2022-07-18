@@ -11,6 +11,9 @@ import java.util.*;
 import static org.mytestingframework.constant.Color.*;
 import static org.mytestingframework.constant.Color.ANSI_RESET;
 
+/**
+ * Class into framework that works with tests.
+ */
 class MyTester {
 
     private MyTester() {

@@ -4,6 +4,10 @@ import org.mytestingframework.throwable.MyAssertError;
 
 import java.util.Objects;
 
+
+/**
+ * Class with assertions for tests.
+ */
 public final class MyAssert {
     private MyAssert() {}
 
@@ -26,6 +30,7 @@ public final class MyAssert {
     private static void failNotEquals(Object unexpected) {
         fail("Object shouldn`t be: " + unexpected + ", but it is");
     }
+
 
     public static void assertNull(Object actual) {
         if(actual != null) {

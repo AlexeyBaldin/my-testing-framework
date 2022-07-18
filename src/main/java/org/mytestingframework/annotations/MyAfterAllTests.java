@@ -6,7 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
-//Only for one method in class
+/**
+ * Annotation for method which will be run after all tests in tested class.
+ * <p>
+ * <strong>Only for one method in the class!</strong>
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MyAfterAllTests {
